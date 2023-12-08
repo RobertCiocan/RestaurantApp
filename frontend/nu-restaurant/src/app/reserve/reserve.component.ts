@@ -13,5 +13,12 @@ export class ReserveComponent {
   selecteazaMasa(masa: number) {
     this.masaSelectata = masa;
   }
+  getMasaImage(masa: any): string {
+    if (masa === this.masaSelectata) {
+        return 'assets/table(2).png'; // Path to the image when selected
+    } else {
+        return 'assets/table.png'; // Default image
+    }
+}
 }
 
