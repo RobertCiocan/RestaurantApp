@@ -1,0 +1,47 @@
+:host {
+    background-color: gray;
+}
+
+.food{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color:rgb(255, 255, 255);
+}  
+
+.listing-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+.listing {
+    text-align: center;
+    width: 250px;
+    margin: 10px;
+}
+  
+.listing-photo {
+    width: 100%;
+    height: auto;
+}
+  
+.listing-details {
+    color: white;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.listing-heading, .listing-price {
+    margin: 10px 0;
+}
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 90px; 
+}

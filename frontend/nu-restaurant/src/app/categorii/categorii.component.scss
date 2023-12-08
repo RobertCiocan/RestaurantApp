@@ -1,0 +1,10 @@
+:host {
+    background-color: gray;
+}
+.food {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color:rgb(255, 255, 255);
+}  
