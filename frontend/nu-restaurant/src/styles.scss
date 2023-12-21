@@ -1,12 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-    background-color: #1E1F20;
-    color: #F2F4EA;
-    height: 100%;
-    margin:0;
-    padding:0;
 
-}
 
 .h1 {
     font-size: 51px;
@@ -17,3 +9,14 @@ body {
     font-weight: bold;
 
 }
+body{
+    z-index: -999;
+    min-height: 100vh;
+    background: url(assets/image1.png) no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+}
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

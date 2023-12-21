@@ -6,11 +6,18 @@ import { ReserveComponent } from './reserve/reserve.component';
 const routes: Routes = [
   {
     path:'contact',
+
     component:ContactComponent
   },
   {
     path: 'rezervare',
     component: ReserveComponent
+
+    component:ContactComponent,
+  },
+  {
+    path: "**",
+    redirectTo: ""
   }
 ];
 
