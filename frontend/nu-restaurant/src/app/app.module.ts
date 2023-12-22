@@ -5,21 +5,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
 import { HeaderComponent } from './header/header.component';
-import { ReserveComponent } from './reserve/reserve.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// pentru serviciul simulat
+import { HttpClientModule } from '@angular/common/http';
+
+import { MenuModule } from './menu/menu.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContactComponent,
-    HeaderComponent,
-    ReserveComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    UsersModule,
+    MenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
