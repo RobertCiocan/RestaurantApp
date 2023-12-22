@@ -1,0 +1,24 @@
+<div class="container">
+  <div class = "text">
+      <h1 class="main-header">Sign In</h1>
+      <!-- <h3 class="second-header">Got a question?</h3>
+      <p class="description">We're here to help and answer any question you<br>
+      might have. We look forward to hearing from you</p> -->
+  </div>
+  <form [formGroup]="signInForm" (ngSubmit)="signIn()"  novalidate>
+    <div class = "content">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" formControlName="username" required>
+      </div>
+
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" required>
+      </div>
+      <div class="btn">
+        <button type="submit" [disabled]="!signInForm.valid">Sign in</button>
+      </div>
+    </div>
+  </form>
+</div>

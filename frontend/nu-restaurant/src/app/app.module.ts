@@ -6,17 +6,33 @@ import { AppComponent } from './app.component';
 import { MeniuComponent } from './meniu/meniu.component';
 import { ProdusComponent } from './produs/produs.component';
 import { CategoriiComponent } from './categorii/categorii.component';
+import { ContactComponent } from './contact/contact.component';
+import { HeaderComponent } from './header/header.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// pentru serviciul simulat
+import { HttpClientModule } from '@angular/common/http';
+
+import { MenuModule } from './menu/menu.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     MeniuComponent,
     ProdusComponent,
-    CategoriiComponent
+    CategoriiComponent,
+    ContactComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    UsersModule,
+    MenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
