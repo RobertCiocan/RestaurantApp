@@ -4,7 +4,7 @@ import { MeniuComponent } from './meniu/meniu.component';
 import { AppComponent } from './app.component';
 import { CategoriiComponent } from './categorii/categorii.component';
 import { ProdusComponent } from './produs/produs.component';
-
+import { ReserveComponent } from './reserve/reserve.component';
 
 import { ContactComponent } from './contact/contact.component';
 
@@ -29,6 +29,11 @@ const routes: Routes = [
   },
   {
     path:'categorii/:name',component:ProdusComponent
+  },
+  {
+    path: 'rezervare',
+    component: ReserveComponent,
+    // component:ContactComponent
   },
   {
     path: "**",

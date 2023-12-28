@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MenuModule } from './menu/menu.module';
 import { UsersModule } from './users/users.module';
+import { ReserveComponent } from './reserve/reserve.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UsersModule } from './users/users.module';
     ProdusComponent,
     CategoriiComponent,
     ContactComponent,
-    HeaderComponent
+    HeaderComponent,
+    ReserveComponent
   ],
   imports: [
     BrowserModule,
