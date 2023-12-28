@@ -11,9 +11,8 @@ const routes: Routes = [
   },
   {
     path: 'rezervare',
-    component: ReserveComponent
-
-    component:ContactComponent,
+    component: ReserveComponent,
+    // component:ContactComponent
   },
   {
     path: "**",
