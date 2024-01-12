@@ -7,11 +7,16 @@ import { ProdusComponent } from './produs/produs.component';
 import { ReserveComponent } from './reserve/reserve.component';
 
 import { ContactComponent } from './contact/contact.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 const routes: Routes = [
   {
     path:'contact',
-    component:ContactComponent,
+    component:ContactComponent
+  },
+  {
+    path:'sign-in',
+    component:SignInComponent
   },
   {
     path: 'users',
