@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 
 @RestController
 @RequestMapping(ApiConstant.API_PATH + ApiConstant.V1_PATH)
@@ -81,11 +83,13 @@ public class AuthenticationController extends BaseController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestBody String token) {
+    public ResponseEntity<String> logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         try {
-            if (token.isEmpty()) {
-                return ResponseEntity.badRequest().body("Token must not be empty");
+            if (Objects.requireNonNull(authorizationHeader).isEmpty() || !authorizationHeader.startsWith("Bearer ")) {
+                return ResponseEntity.badRequest().body("Invalid Authorization header");
             }
+
+            String token = authorizationHeader.substring(7);
 
             RedisUtil.blacklistToken(token);
 
@@ -97,19 +101,21 @@ public class AuthenticationController extends BaseController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<String> validateToken(@RequestBody String token) {
+    public ResponseEntity<String> validateToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         try {
-            if (token.isEmpty()) {
-                return ResponseEntity.badRequest().body("Token must not be empty");
+            if (Objects.requireNonNull(authorizationHeader).isEmpty() || !authorizationHeader.startsWith("Bearer ")) {
+                return ResponseEntity.badRequest().body("Invalid Authorization header");
             }
+
+            String token = authorizationHeader.substring(7); // after "Bearer "
 
             if (!JwtUtil.validateJwt(token)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
             }
 
-             if (RedisUtil.isBlacklisted(token)) {
+            if (RedisUtil.isBlacklisted(token)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is blacklisted");
-             }
+            }
 
             return ResponseEntity.ok("Token is valid");
         } catch (Exception e) {
@@ -117,4 +123,5 @@ public class AuthenticationController extends BaseController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
         }
     }
+
 }

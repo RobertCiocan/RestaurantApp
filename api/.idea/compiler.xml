@@ -15,7 +15,6 @@
         </processorPath>
         <module name="admin" />
         <module name="client" />
-        <module name="ospatar" />
         <module name="idm" />
         <module name="rezervare" />
       </profile>
@@ -27,6 +26,9 @@
         <module name="gateway" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ospatar" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

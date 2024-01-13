@@ -52,6 +52,7 @@ spring:
         - StripPrefix=1
         - AddRequestHeader=proxied, true
         - OncePerRequestFilter
+        - JwtValidationFilter
       filter:
         remove-hop-by-hop:
           headers: connection, keep-alive, x-frame-options
