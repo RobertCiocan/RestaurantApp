@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
-import { AuthenticationRequest } from '../models/authentication-request';
+import { AuthenticationRequest } from '../models/Requests/authentication-request';
 
 @Component({
   selector: 'app-sing-in',

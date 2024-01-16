@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
+import { RegistrationRequest } from '../models/Requests/registration-request';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,13 @@ export class RegisterComponent{
 
   register() {
     if (this.registerForm.valid) {
-      this.usersService.registerUser(this.registerForm.value).subscribe(
+      const registrationRequest: RegistrationRequest = {
+        username: this.registerForm.value.username,
+        password: this.registerForm.value.password,
+        role: "ROLE_USER"
+      };
+
+      this.usersService.registerUser(registrationRequest).subscribe(
         (response) => {
           console.log('User registered:', response);
         },
