@@ -52,4 +52,13 @@ public class JwtUtil {
                 .getBody();
         return Long.parseLong(claims.getId());
     }
+
+    public static Claims getUserClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
 }

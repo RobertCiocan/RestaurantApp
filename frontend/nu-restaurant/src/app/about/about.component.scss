@@ -5,7 +5,7 @@
 
 div.container{
     display: flex;
-    height: 80%;
+    height: 100%;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -27,7 +27,6 @@ div.container{
         .second-header{
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            font-size: 18px;
             font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
             color: rgba(219, 166, 51, 0.7);
             margin: 0;
@@ -35,7 +34,7 @@ div.container{
     
         .description{
             color: rgba(160, 136, 37, 1);
-            font-size: 18px;
+            font-size: 14px;
             letter-spacing: 0.15em;
             margin: 0;
         }
@@ -53,6 +52,7 @@ div.container{
         box-shadow: 0 3px 5px rgb(61, 61, 61);
         gap:16px;
         width: 25rem;
+        
     }
 
     label{
@@ -105,12 +105,6 @@ div.container{
                 background-color: rgba(219, 166, 51, 1);
             }
         }
-    }
-
-    .links{
-        color: rgba(219, 166, 51, 0.73);
-        text-decoration: none;
-        font-size: 14px;
     }
 }
 

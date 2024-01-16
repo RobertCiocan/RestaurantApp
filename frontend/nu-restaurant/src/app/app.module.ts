@@ -3,9 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MeniuComponent } from './meniu/meniu.component';
-import { ProdusComponent } from './produs/produs.component';
-import { CategoriiComponent } from './categorii/categorii.component';
+import { MeniuComponent } from './menu/meniu/meniu.component';
+import { ProdusComponent } from './menu/produs/produs.component';
 import { ContactComponent } from './contact/contact.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,18 +15,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { MenuModule } from './menu/menu.module';
 import { UsersModule } from './users/users.module';
 import { ReserveComponent } from './reserve/reserve.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-
+import { AboutComponent } from './about/about.component';
 @NgModule({
   declarations: [
     AppComponent,
     MeniuComponent,
     ProdusComponent,
-    CategoriiComponent,
     ContactComponent,
     HeaderComponent,
     ReserveComponent,
-    SignInComponent
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

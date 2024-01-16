@@ -1,0 +1,30 @@
+<div class="container">
+    <div class = "content">
+        <div class="text">
+        <h1 class="main-header">About Us</h1>
+        <h3 class="second-header">Our Team, Location, and About the Restaurant</h3>
+        <p class="description">
+            Welcome to our restaurant, where a passion for delicious food meets a welcoming atmosphere.
+            We have a dedicated staff and a wonderful location to provide you with an unforgettable culinary experience.
+        </p>
+    
+        <div class="text">
+            <h2 class="section-header">Our Staff</h2>
+            <ul>
+            <li *ngFor="let staffMember of staff">{{ staffMember }}</li>
+            </ul>
+        </div>
+    
+        <div class="text">
+            <h2 class="section-header">Our Location</h2>
+            <p>{{ location }}</p>
+        </div>
+    
+        <div class="text">
+            <h2 class="section-header">About Our Restaurant</h2>
+            <p>{{ aboutRestaurant }}</p>
+        </div>
+        </div>
+    </div>
+  </div>
+  

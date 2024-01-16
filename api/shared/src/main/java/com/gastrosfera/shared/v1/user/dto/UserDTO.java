@@ -1,5 +1,6 @@
 package com.gastrosfera.shared.v1.user.dto;
 
+import com.gastrosfera.shared.v1.base.RoleEnum;
 import com.gastrosfera.shared.v1.constraint.PostValidation;
 import com.gastrosfera.shared.v1.constraint.PutValidation;
 import com.gastrosfera.shared.v1.model.Identifiable;

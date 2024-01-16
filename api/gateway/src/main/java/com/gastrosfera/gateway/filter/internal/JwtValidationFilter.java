@@ -58,7 +58,7 @@ public class JwtValidationFilter extends AbstractGatewayFilterFactory<Object> {
     }
 
     private Mono<ResponseEntity<String>> validateJwtWithIdm(String token) {
-        return webClient.post()
+        return webClient.get()
                 .uri(ApiConstant.API_PATH + ApiConstant.V1_PATH + "/validate")
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .retrieve()

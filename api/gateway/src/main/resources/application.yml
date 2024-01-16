@@ -52,6 +52,8 @@ spring:
         - StripPrefix=1
         - AddRequestHeader=proxied, true
         - OncePerRequestFilter
+        - JwtValidationFilter
+        - TokenRoleFilter
       filter:
         remove-hop-by-hop:
           headers: connection, keep-alive, x-frame-options
@@ -61,6 +63,12 @@ spring:
           max-connections: 2000
           type: FIXED
           metrics: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods:
+              - GET, PUT, POST, DELETE
 
 
 logging:

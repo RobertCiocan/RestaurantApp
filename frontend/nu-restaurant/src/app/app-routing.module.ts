@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MeniuComponent } from './meniu/meniu.component';
+import { MeniuComponent } from './menu/meniu/meniu.component';
 import { AppComponent } from './app.component';
-import { CategoriiComponent } from './categorii/categorii.component';
-import { ProdusComponent } from './produs/produs.component';
+import { ProdusComponent } from './menu/produs/produs.component';
 import { ReserveComponent } from './reserve/reserve.component';
 
 import { ContactComponent } from './contact/contact.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {
@@ -15,9 +14,13 @@ const routes: Routes = [
     component:ContactComponent
   },
   {
-    path:'sign-in',
-    component:SignInComponent
+    path:'about',
+    component:AboutComponent
   },
+  // {
+  //   path:'sign-in',
+  //   component:SignInComponent
+  // },
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then(mod => mod.UsersModule)
@@ -28,9 +31,6 @@ const routes: Routes = [
   },
   {
     path:'meniu', component:MeniuComponent
-  },
-  {
-    path:'categorii', component:CategoriiComponent
   },
   {
     path:'categorii/:name',component:ProdusComponent

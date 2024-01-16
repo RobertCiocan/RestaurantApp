@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
         if (existingUser.isPresent()) {
             throw new EntityAlreadyExistsException(String.format("Userul %s este deja inregistrat", userDTO.getIdUser()));
         }
+        System.out.println(userDTO.getRole().toString());
         return userMapper.entityToDto(userRepository.save(userMapper.dtoToEntity(userDTO)));
     }
 

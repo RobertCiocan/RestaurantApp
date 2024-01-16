@@ -1,5 +1,6 @@
 package com.gastrosfera.shared.v1.user.dto;
 
+import com.gastrosfera.shared.v1.base.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

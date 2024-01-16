@@ -10,22 +10,23 @@ import { MenuItem } from '../models/menu-item.model';
   styleUrls: ['./show-item.component.scss']
 })
 export class ShowItemComponent implements OnInit {
-  menuItem!: MenuItem;
+  menuItem: MenuItem | undefined;
 
   constructor(private route: ActivatedRoute, private menuService: MenuService) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.menuItem = this.menuService.getMenuItem(id)!;
-    }else
-    {
+      this.menuService.getMenuItemById(id).subscribe(
+        (item: MenuItem) => {
+          this.menuItem = item;
+        },
+        (error) => {
+          console.error('Error fetching menu item', error);
+        }
+      );
+    } else {
       console.log("id is not ok");
     }
-    // daca vrem /menu/item?id=1
-    // this.route.queryParams.subscribe(params => {
-    //   // Retrieve the 'id' parameter from the query parameters
-    //   this.menuItem = this.menuService.getMenuItem(params['id'])!;
-    // });
   }
 }

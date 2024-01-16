@@ -1,24 +1,37 @@
-<div class="container">
-  <div class = "text">
-      <h1 class="main-header">Sign In</h1>
-      <!-- <h3 class="second-header">Got a question?</h3>
-      <p class="description">We're here to help and answer any question you<br>
-      might have. We look forward to hearing from you</p> -->
-  </div>
-  <form [formGroup]="signInForm" (ngSubmit)="signIn()"  novalidate>
-    <div class = "content">
-      <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" formControlName="username" required>
-      </div>
 
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" formControlName="password" required>
-      </div>
-      <div class="btn">
-        <button type="submit" [disabled]="!signInForm.valid">Sign in</button>
-      </div>
+<div class ="container">
+    <div class = "text">
+        <h1 class="second-header">Welcome to ACGastroSfera</h1>
+        <h2 class="description">Glad to see you</h2>
+        <h1 class="main-header">Login to your account</h1>
     </div>
-  </form>
+    
+    <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+        <div class = "content">
+            <div style="display: flex; flex-direction: column; gap: 4px">
+                <label>
+                    email
+                </label>
+                <input type="text" formControlName="username" placeholder="Username">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+                <label>
+                    password
+                </label>
+                <input type="password" formControlName="password" placeholder="Password">
+            </div>
+            <div *ngIf="invalidCredentials" class="error-message">
+                Invalid credentials. Please try again.
+            </div>
+            <div style="text-align: end; gap: 4px;">
+                <a class="links" routerLink="/password-recovery">Forgot your password?</a>
+            </div>
+            <div class="btn">
+                <button type="submit">Submit</button>
+            </div>
+            <div style="text-align: center; gap: 4px">
+                <a class="links" style="font-size: 16px;" routerLink="/register">Don't have an account?</a>
+            </div>
+        </div>
+    </form>
 </div>

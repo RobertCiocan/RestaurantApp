@@ -1,28 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 import { MenuItem } from './models/menu-item.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MenuService {
-  private menuItems: MenuItem[] = [
-    {
-      id: '1',
-      name: 'Pizza',
-      description: 'Peperoni Pizza',
-      price: 30,
-      image: 'pizza.png',
-    },
-    {
-      id: '2',
-      name: 'AAAAAAAAAAAA',
-      description: 'Peperoni Pizza',
-      price: 30,
-      image: 'pizza.png',
-    },
-  ];
+export class MenuService{
+  private apiUrl = 'http://localhost:8086/api/v1';
 
-  getMenuItem(id: string): MenuItem | undefined {
-    return this.menuItems.find((item) => item.id === id);
+  constructor(private http: HttpClient) {}
+
+  menuItems: MenuItem[] = [];
+
+  getMenuItemById(id: string): Observable<MenuItem> {
+    return this.http.get<MenuItem>(`${this.apiUrl}/menu/${id}`);
   }
+
+  getMenuItemsByCategory(category: string | null): Observable<MenuItem[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/menu/${category}`);
+  }
+  
 }
