@@ -20,7 +20,6 @@ public class JwtValidationFilter extends AbstractGatewayFilterFactory<Object> {
 
     private final WebClient webClient;
 
-    // Define a list of paths to be excluded from JWT verification
     private final List<String> excludedPaths = Arrays.asList(
             ApiConstant.API_PATH + ApiConstant.V1_PATH + "/login",
             ApiConstant.API_PATH + ApiConstant.V1_PATH + "/register"

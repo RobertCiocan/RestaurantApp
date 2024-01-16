@@ -52,6 +52,7 @@ spring:
         - StripPrefix=1
         - AddRequestHeader=proxied, true
         - OncePerRequestFilter
+        - JwtValidationFilter
       filter:
         remove-hop-by-hop:
           headers: connection, keep-alive, x-frame-options
@@ -62,11 +63,16 @@ spring:
           type: FIXED
           metrics: true
       globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: "http://localhost:4200"
-            allowedMethods:
-              - GET, PUT, POST, DELETE
+        add-to-simple-url-handler-mapping: true
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins: "http://localhost:4200"
+#            allowedHeaders: "*"
+#            allowedMethods:
+#              - GET
+#              - POST
+#              - PUT
+#              - DELETE
 
 
 logging:

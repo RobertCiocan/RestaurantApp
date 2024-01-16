@@ -4,19 +4,20 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { User } from './models/user.model';
-import { AuthenticationRequest } from './models/authentication-request';
+import { AuthenticationRequest } from './models/Requests/authentication-request';
+import { RegistrationRequest } from './models/Requests/registration-request';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
   // private apiUrl = 'http://localhost:8080/idm-service/api/v1';
-  private apiUrl = 'http://localhost:8086/api/v1';
+  public apiUrl = 'http://localhost:8086/api/v1';
 
   constructor(private http: HttpClient) {}
 
-  registerUser(user: User): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/register`, user);
+  registerUser(registrationRequest: RegistrationRequest): Observable<String> {
+    return this.http.post<string>(`${this.apiUrl}/register`, registrationRequest);
   }
 
   signInUser(authenticationRequest: AuthenticationRequest): Observable<string> {
