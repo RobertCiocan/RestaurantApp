@@ -12,4 +12,7 @@ public class ApiConstant {
 
     public static final String OSPATAR_SERVICE_PATH = "/ospatar-service";
 
+    /* Produse */
+    public static final String PRODUS_PATH = "/produs";
+    public static final String PRODUS_V1_URI = API_PATH + V1_PATH + PRODUS_PATH;
 }
