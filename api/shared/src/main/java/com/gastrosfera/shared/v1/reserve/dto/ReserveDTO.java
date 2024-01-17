@@ -5,6 +5,7 @@ import com.gastrosfera.shared.v1.constraint.PutValidation;
 import com.gastrosfera.shared.v1.model.Identifiable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,9 +36,14 @@ public class ReserveDTO implements Identifiable<String> {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date data;
 
+
     @NotNull(groups = {PostValidation.class})
     @DateTimeFormat(pattern = "HH:mm:ss")
     private Time time;
+
+    @NotNull(groups = {PostValidation.class})
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    private Time time_end;
 
     @Positive(groups = {PostValidation.class})
     @Max(value = 8, groups = {PostValidation.class, PutValidation.class})
@@ -48,7 +54,6 @@ public class ReserveDTO implements Identifiable<String> {
     public String getIdentifier() {
         return masa;
     }
-
 
 
 

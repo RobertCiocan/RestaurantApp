@@ -27,7 +27,13 @@ public class ReserveController extends BaseController {
     }
     @PostMapping(ApiConstant.CREATE)
     public ResponseEntity<ReserveDTO> createReserve(@RequestBody @Validated(PostValidation.class) ReserveDTO reserveDTO){
-        return buildCreatedResponse(reserveService.createReserve(reserveDTO));
+        try {
+            return buildCreatedResponse(reserveService.createReserve(reserveDTO));
+        }
+        catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+
     }
 
 
@@ -38,7 +44,12 @@ public class ReserveController extends BaseController {
 
     @PutMapping
     public ResponseEntity<ReserveDTO> updateReserve(@RequestBody @Validated(PutValidation.class) ReserveDTO reserveDTO){
-        return buildResponse(reserveService.updateReserve(reserveDTO), HttpStatus.OK);
+        try {
+            return buildResponse(reserveService.updateReserve(reserveDTO), HttpStatus.OK);
+        }
+        catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
     }
 
     @DeleteMapping(ApiConstant.BY_ID_PATH)

@@ -10,6 +10,10 @@ import com.gastrosfera.shared.v1.reserve.dto.ReserveDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -23,6 +27,9 @@ public class ReserveServiceImpl implements ReserveService {
         if(existingReserve.isPresent()){
             throw new EntityAlreadyExistsException(String.format("Masa %s este deja rezervata", reserveDTO.getMasa()));
         }
+        if (!isReservationTimeValid(reserveDTO, reserveDTO.getMasa())) {
+            throw new IllegalArgumentException("Intervalul orar pentru rezervare este invalid.");
+        }
         return reserveMapper.entityToDto(reserveRepository.save(reserveMapper.dtoToEntity(reserveDTO)));
 
     }
@@ -34,7 +41,6 @@ public class ReserveServiceImpl implements ReserveService {
             throw new EntityDoesNotExistException(String.format("Masa %s nu este rezervata", id));
         }
         return reserveMapper.entityToDto(existingReserve.get());
-
     }
 
     @Override
@@ -42,10 +48,15 @@ public class ReserveServiceImpl implements ReserveService {
         Optional<Reserve> existingReserve = reserveRepository.findById(reserveDTO.getMasa());
         if(existingReserve.isPresent()){
             Reserve reserve = existingReserve.get();
+            if (!isReservationTimeValid(reserveDTO, reserve.getMasa())) {
+
+                throw new IllegalArgumentException("Intervalul orar pentru rezervare este invalid.");
+            }
             reserve.setName(reserveDTO.getName());
             reserve.setPhone(reserveDTO.getPhone());
             reserve.setData(reserveDTO.getData());
             reserve.setTime(reserveDTO.getTime());
+            reserve.setTime_end(reserveDTO.getTime_end());
             reserve.setSpecialRequests(reserveDTO.getSpecialRequests());
             reserve.setGuests(reserveDTO.getGuests());
 
@@ -54,8 +65,19 @@ public class ReserveServiceImpl implements ReserveService {
             return reserveMapper.entityToDto(updatedReserve);
         }
         else{
+            if (!isReservationTimeValid(reserveDTO, reserveDTO.getMasa())) {
+                throw new IllegalArgumentException("Intervalul orar pentru rezervare este invalid.");
+            }
             return reserveMapper.entityToDto(reserveRepository.save(reserveMapper.dtoToEntity(reserveDTO)));
         }
+    }
+    private boolean isReservationTimeValid(ReserveDTO reserveDTO, String table){
+        List<Reserve> overlappingReservations = reserveRepository.findOverlappingReservations(
+                table,
+                reserveDTO.getTime(),
+                reserveDTO.getTime_end()
+        );
+        return overlappingReservations.isEmpty();
     }
 
     @Override

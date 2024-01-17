@@ -29,6 +29,8 @@ public class Reserve extends BaseModel {
     private Time time;
 
     @Column
+    private Time time_end;
+    @Column
     private Integer guests;
 
     @Column
