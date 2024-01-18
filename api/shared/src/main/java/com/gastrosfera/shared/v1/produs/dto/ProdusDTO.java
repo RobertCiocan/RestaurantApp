@@ -13,10 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProdusDTO {
-    private String id;
     private String name;
     private double price;
     private String description;
     private Category category;
+    private String image;
     private List<String> ingredients;
 }

@@ -20,7 +20,7 @@ public class ProdusServiceImpl implements ProdusService {
     private final ProdusMapper produsMapper;
     @Override
     public ProdusDTO createProduct(ProdusDTO produsDTO) {
-        Optional<Produs> produs = produsRepository.findById(produsDTO.getId());
+        Optional<Produs> produs = produsRepository.findById(produsDTO.getName());
         if(produs.isPresent()){
             throw new EntityAlreadyExistsException("Mai patesti");
         }
@@ -28,18 +28,18 @@ public class ProdusServiceImpl implements ProdusService {
     }
 
     @Override
-    public ProdusDTO getProduct(String id) {
-        Optional<Produs> produs = produsRepository.findById(id);
+    public ProdusDTO getProduct(String name) {
+        Optional<Produs> produs = produsRepository.findById(name);
         if(produs.isEmpty()){
             throw new EntityDoesNotExistException("Mai nu patesti");
         }
         return produsMapper.entityToDto(produs.get());
     }
 
-//    @Override
-//    public List<ProdusDTO> getAllProducts() {
-//        return produsRepository.findAll().stream().map(produsMapper::entityToDto).toList();
-//    }
+    @Override
+    public List<ProdusDTO> getAllProducts() {
+        return produsRepository.findAll().stream().map(produsMapper::entityToDto).toList();
+    }
 
     @Override
     public List<ProdusDTO> getAllProducts(Category category) {
@@ -47,17 +47,17 @@ public class ProdusServiceImpl implements ProdusService {
     }
 
     @Override
-    public void deleteProduct(String id) {
-        Optional<Produs> produs = produsRepository.findById(id);
+    public void deleteProduct(String name) {
+        Optional<Produs> produs = produsRepository.findById(name);
         if(produs.isEmpty()){
             throw new EntityDoesNotExistException("Mai nu exista pt delete.");
         }
-        produsRepository.deleteById(id);
+        produsRepository.deleteById(name);
     }
 
     @Override
     public void updateProduct(ProdusDTO produsDTO) {
-        Optional<Produs> produs = produsRepository.findById(produsDTO.getId());
+        Optional<Produs> produs = produsRepository.findById(produsDTO.getName());
         if(produs.isEmpty()){
             throw new EntityDoesNotExistException("Mai intai trebuie sa ai, ca dupa sa dai");
         }

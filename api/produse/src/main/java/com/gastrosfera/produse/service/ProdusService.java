@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProdusService {
     ProdusDTO createProduct(ProdusDTO produsDTO);
     ProdusDTO getProduct(String id);
-    //List<ProdusDTO> getAllProducts();
+    List<ProdusDTO> getAllProducts();
     List<ProdusDTO> getAllProducts(Category category);
     void deleteProduct(String id);
     void updateProduct(ProdusDTO produsDTO);

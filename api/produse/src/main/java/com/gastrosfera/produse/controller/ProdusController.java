@@ -24,19 +24,14 @@ public class ProdusController extends BaseController {
         this.produsService = produsService;
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<ProdusDTO>> getAllProducts(){
-//        return buildResponse(produsService.getAllProducts(), HttpStatus.OK);
-//    }
-
     @GetMapping
     public ResponseEntity<List<ProdusDTO>> getAllFoods(@RequestParam Category category){
         return buildResponse(produsService.getAllProducts(category), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProdusDTO> getProduct(@PathVariable String id){
-        return buildResponse(produsService.getProduct(id), HttpStatus.OK);
+    @GetMapping("/{name}")
+    public ResponseEntity<ProdusDTO> getProduct(@PathVariable String name){
+        return buildResponse(produsService.getProduct(name), HttpStatus.OK);
     }
 
 
@@ -46,16 +41,21 @@ public class ProdusController extends BaseController {
         //return buildCreatedResponse(produsService.createProduct(produsDTO));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProdus(@PathVariable String id){
-        produsService.deleteProduct(id);
+    @DeleteMapping("/{name}")
+    public ResponseEntity<Void> deleteProdus(@PathVariable String name){
+        produsService.deleteProduct(name);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateProdus(@PathVariable String id, @RequestBody ProdusDTO produsDTO){
-        produsDTO.setId(id);
+    @PutMapping("/{name}")
+    public ResponseEntity<Void> updateProdus(@PathVariable String name, @RequestBody ProdusDTO produsDTO){
+        produsDTO.setName(name);
         produsService.updateProduct(produsDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ProdusDTO>> getAllProducts(){
+        return buildResponse(produsService.getAllProducts(), HttpStatus.OK);
     }
 }
