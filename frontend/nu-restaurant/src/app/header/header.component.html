@@ -10,12 +10,14 @@
             <li><a class="underline" routerLink="/meniu" routerLinkActive="active-route">
                 Menu
             </a></li>
-            <li><a class="underline" routerLink="/rezervare" routerLinkActive="active-route">
-                Rezervare
-            </a></li>
             <li><a class="underline" routerLink="/contact" routerLinkActive="active-route">
                 Contact
             </a></li>
+            <div *ngIf="isAdmin()">
+                <li><a class="underline" routerLink="/admin" routerLinkActive="active-route">
+                    Admin
+                </a></li>
+            </div>
             <div *ngIf="!isUserLoggedIn()">
             <li><a class="underline" routerLink="/users/sign-in" routerLinkActive="active-route">
                 Sign In
@@ -25,6 +27,9 @@
             </a></li>
             </div>
             <div *ngIf="isUserLoggedIn()">
+                <li><a class="underline" routerLink="/rezervare" routerLinkActive="active-route">
+                    Rezervare
+                </a></li>
                 <li><a class="underline" (click)="logout()" routerLinkActive="active-route">
                     Logout
                 </a></li>

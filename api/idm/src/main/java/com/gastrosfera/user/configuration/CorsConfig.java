@@ -1,4 +1,4 @@
-package com.gastrosfera.user.config;
+package com.gastrosfera.user.configuration;
 
 import com.gastrosfera.shared.v1.base.ApiConstant;
 import org.springframework.context.annotation.Configuration;

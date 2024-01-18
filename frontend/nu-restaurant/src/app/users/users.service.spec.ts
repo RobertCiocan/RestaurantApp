@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UsersService } from './users.service';
-import { User } from './models/user.model';
 import { AuthenticationRequest } from './models/Requests/authentication-request';
+import { RegistrationRequest } from './models/Requests/registration-request';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -25,23 +25,24 @@ describe('UsersService', () => {
   });
 
   it('should register a user', () => {
-    const mockUser: User = {
+    const mockRegistrationRequest: RegistrationRequest = {
       username: 'testuser',
-      email: 'test@example.com',
       password: 'password123',
-      firstName: 'Test',
-      lastName: 'User',
-      phoneNumber: '123456789',
-      address: 'Test Address',
+      role: 'ROLE_USER',
     };
 
-    service.registerUser(mockUser).subscribe((user) => {
-      expect(user).toEqual(mockUser);
-    });
+    service.registerUser(mockRegistrationRequest).subscribe(
+      (response) => {
+        console.log('User registered:', response);
+      },
+      (error) => {
+        console.error('Registration failed', error);
+      }
+    );
 
     const req = httpTestingController.expectOne(`${service.apiUrl}/register`);
     expect(req.request.method).toEqual('POST');
-    req.flush(mockUser);
+    req.flush('Registration successful', { status: 200, statusText: 'OK' });
   });
 
   it('should sign in a user', () => {

@@ -37,6 +37,8 @@ export class UsersService {
       map((response: HttpResponse<string>) => {
         if (response.status === 200) {
           sessionStorage.removeItem('jwt');
+          sessionStorage.removeItem('role');
+          sessionStorage.removeItem('id');
         }
         return response.body || '';
       })
