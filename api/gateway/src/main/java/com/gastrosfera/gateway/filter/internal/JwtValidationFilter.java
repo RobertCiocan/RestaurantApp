@@ -4,8 +4,10 @@ import com.gastrosfera.shared.v1.base.ApiConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -14,12 +16,14 @@ import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 public class JwtValidationFilter extends AbstractGatewayFilterFactory<Object> {
 
     private final WebClient webClient;
 
+    // Define a list of paths to be excluded from JWT verification
     private final List<String> excludedPaths = Arrays.asList(
             ApiConstant.API_PATH + ApiConstant.V1_PATH + "/login",
             ApiConstant.API_PATH + ApiConstant.V1_PATH + "/register"
@@ -57,7 +61,7 @@ public class JwtValidationFilter extends AbstractGatewayFilterFactory<Object> {
     }
 
     private Mono<ResponseEntity<String>> validateJwtWithIdm(String token) {
-        return webClient.get()
+        return webClient.post()
                 .uri(ApiConstant.API_PATH + ApiConstant.V1_PATH + "/validate")
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .retrieve()
@@ -72,5 +76,3 @@ public class JwtValidationFilter extends AbstractGatewayFilterFactory<Object> {
                 .bufferFactory().wrap(exception.getResponseBodyAsByteArray())));
     }
 }
-
-

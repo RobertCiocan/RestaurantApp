@@ -20,6 +20,14 @@ public abstract class BaseController {
         return new ResponseEntity(entity, httpHeaders, HttpStatus.CREATED);
     }
 
+    protected <T extends Identifiable<Long>> ResponseEntity<T> buildCreatedResponse2(T entity) {
+        String location = UriComponentsBuilder.fromUriString(request.getRequestURL().toString()).path("/{id}").buildAndExpand(entity.getIdentifier()).toString();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.set("Location", location);
+        return new ResponseEntity(entity, httpHeaders, HttpStatus.CREATED);
+    }
+
     protected <T> ResponseEntity<T> buildResponse(T entity, HttpStatusCode status) {
         return new ResponseEntity<>(entity, status);
     }

@@ -2,7 +2,6 @@ package com.gastrosfera.shared.v1.base;
 
 public class ApiConstant {
 
-    /* Api Constants */
     public static final String API_PATH = "/api";
     public static final String V1_PATH = "/v1";
     public static final String BY_ID_PATH = "/{id}";
@@ -20,6 +19,5 @@ public class ApiConstant {
     public static final String CREATE = "/create";
 
     public static final String RESERVE_SERVICE_PATH = "/reserve-service";
-
-
+    
 }

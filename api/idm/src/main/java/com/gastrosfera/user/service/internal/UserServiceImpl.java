@@ -3,10 +3,12 @@ package com.gastrosfera.user.service.internal;
 import com.gastrosfera.shared.v1.exception._4xx.EntityAlreadyExistsException;
 import com.gastrosfera.shared.v1.exception._4xx.EntityDoesNotExistException;
 import com.gastrosfera.shared.v1.user.dto.UserDTO;
+
 import com.gastrosfera.user.model.User;
 import com.gastrosfera.user.model.mapper.UserMapper;
 import com.gastrosfera.user.repository.UserRepository;
 import com.gastrosfera.user.service.UserService;
+
 import lombok.AllArgsConstructor;
 
 import java.util.Optional;
