@@ -45,5 +45,8 @@
         <button type="submit" [disabled]="!registerForm.valid">Register</button>
       </div>
     </div>
+    <div *ngIf="notificationMessage" class="notification">
+      {{ notificationMessage }}
+    </div>
   </form>
 </div>
