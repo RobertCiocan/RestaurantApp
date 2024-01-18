@@ -3,9 +3,7 @@ package com.gastrosfera.shared.v1.reserve.dto;
 import com.gastrosfera.shared.v1.constraint.PostValidation;
 import com.gastrosfera.shared.v1.constraint.PutValidation;
 import com.gastrosfera.shared.v1.model.Identifiable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +19,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReserveDTO implements Identifiable<String> {
+
+    @Id
+    private long uuid;
     @NotBlank(groups = {PostValidation.class, PutValidation.class})
     @Size(min = 1, max = 13, groups = {PostValidation.class, PutValidation.class})
     private String masa;

@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(ApiConstant.RESERVE_V1_URI)
 public class ReserveController extends BaseController {
@@ -38,8 +40,13 @@ public class ReserveController extends BaseController {
 
 
     @GetMapping(ApiConstant.BY_ID_PATH)
-    public ResponseEntity<ReserveDTO> getReserveById(@PathVariable("id") String id){
+    public ResponseEntity<ReserveDTO> getReserveById(@PathVariable("id") long id){
         return buildResponse(reserveService.getReserve(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/masa/{masa}")
+    public ResponseEntity<List<ReserveDTO>> getReservedByMasa(@PathVariable("masa") String masa) {
+        return buildResponse(reserveService.getReserveByMasa(masa), HttpStatus.OK);
     }
 
     @PutMapping
@@ -53,7 +60,7 @@ public class ReserveController extends BaseController {
     }
 
     @DeleteMapping(ApiConstant.BY_ID_PATH)
-    public ResponseEntity<Void> deleteReserve(@PathVariable("id") String id){
+    public ResponseEntity<Void> deleteReserve(@PathVariable("id") long id){
         return reserveService.deleteReserve(id);
     }
 

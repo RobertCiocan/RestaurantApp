@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent {
-  staff: string[] = ['Employee Name 1', 'Employee Name 2', 'Employee Name 3'];
-  location: string = 'Restaurant Address, City, Country';
-  aboutRestaurant: string = 'A few words about our restaurant...';
+  staff: string[] = ['Byte Bucătarul ', 'Script Ospatarul', 'Codrina Compilerescu', 'Bit Bogdan'];
+  location: string = '12 Strada Pâinii Pufos, Gustopolis, 3456';
+  aboutRestaurant: string = 'Savoarea Întâlnește Inovația: Descoperă Sfera Gastronomică a AC!';
 }

@@ -3,9 +3,10 @@
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:repeat(3, 1fr);
     height: 100vh;
     color: rgba(219, 166, 51, 1);
+     
 }
 
 // .tables {
@@ -63,11 +64,19 @@
     display: grid;
     grid-template-columns: 0.2fr 1fr 1fr;
     height: 100vh;
-    grid-column-gap: 30px;
+    grid-column-gap: 10px;
 
     // padding: 20px;
     border-radius: 10px;
     
+}
+
+.detail{
+position: fixed;
+  
+  left: 0;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .baie{
@@ -117,7 +126,7 @@ label {
     box-sizing: border-box;
 }
 
-.input-group input[type="submit"] {
+.input-group button[type="submit"] {
     background-color: #4CAF50;
      
     border: none;
@@ -127,7 +136,7 @@ label {
     transition: background-color 0.3s;
 }
 
-.input-group input[type="submit"]:hover {
+.input-group button[type="submit"]:hover {
     background-color: #45a049;
 }
 
