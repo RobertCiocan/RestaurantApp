@@ -1,0 +1,98 @@
+<div class="h1">Rezervare</div>
+<div class="container">
+    <div class="c1">
+        <div></div>
+        <div class="tables1">
+            <div class="mase">
+                <div class="column">
+                    <label class="masa" *ngFor="let masa of mese.slice(0, 3)">
+                        <input type="radio" name="masa" [value]="masa" (click)="selecteazaMasa(masa)">
+                        <img [src]="getMasaImage(masa)" [ngClass]="{'selected': masa === masaSelectata}" height="50px" width="50">
+                        <!-- <span [ngClass]="{'selected': masa === masaSelectata}"></span> -->
+                    </label>
+                </div>
+                <div class="column">
+                    <label class="masa" *ngFor="let masa of mese.slice(3, 6)">
+                        <input type="radio" name="masa" [value]="masa" (click)="selecteazaMasa(masa)">
+                        <img [src]="getMasaImage(masa)" [ngClass]="{'selected': masa === masaSelectata}" height="50px" width="50">
+
+                        <!-- <span [ngClass]="{'selected': masa === masaSelectata}"></span> -->
+                    </label>
+                </div>
+
+            </div>
+            <div class="bar">
+                <img src="assets/bar-counter(2).png" height="128px" width="128px">
+
+            </div>
+            <div class="mase">
+                <label class="masa" *ngFor="let masa of mese.slice(6, 10)">
+                    <input type="radio" name="masa" [value]="masa" (click)="selecteazaMasa(masa)">
+                    <img [src]="getMasaImage(masa)" [ngClass]="{'selected': masa === masaSelectata}" height="50px" width="50">
+                    <!-- <span [ngClass]="{'selected': masa === masaSelectata}"></span> -->
+                </label>
+            </div>
+            <div class="baie">
+                <img src="assets/toilet.png" height="56px" width="56px">
+            </div>
+        </div>
+        <div class="tables2">
+            <div class="mase">
+                <div class="column">
+                    <label class="masa" *ngFor="let masa of mese.slice(10,18)">
+                        <input type="radio" name="masa" [value]="masa" (click)="selecteazaMasa(masa)">
+                        <img [src]="getMasaImage(masa)" [ngClass]="{'selected': masa === masaSelectata}" height="50px" width="50">
+
+                        <!-- <span [ngClass]="{'selected': masa === masaSelectata}"></span> -->
+                    </label>
+                </div>
+                <div class="column">
+                    <label class="masa" *ngFor="let masa of mese.slice(18)">
+                        <input type="radio" name="masa" [value]="masa" (click)="selecteazaMasa(masa)">
+                        <img [src]="getMasaImage(masa)"[ngClass]="{'selected': masa === masaSelectata}" height="50px" width="50">
+
+                        <!-- <span [ngClass]="{'selected': masa === masaSelectata}"></span> -->
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="reservation-form">
+        <form action="#" method="post">
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
+            </div>
+
+            <div class="input-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="input-group">
+                <label for="time">Time</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+
+            <div class="input-group">
+                <label for="guests">Guests</label>
+                <input type="number" id="guests" name="guests" required>
+            </div>
+
+            <div class="input-group">
+                <label for="requests">Special Requests</label>
+                <textarea id="requests" name="requests" placeholder="Any special requests?"></textarea>
+            </div>
+
+            <div class="input-group">
+                <input type="submit" value="Reserve Now">
+            </div>
+        </form>
+    </div>
+</div>

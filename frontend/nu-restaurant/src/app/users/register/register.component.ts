@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
-import { ClientRequest } from '../models/Requests/client_request';
+import { ClientRequest } from '../models/Requests/client-request';
 
 @Component({
   selector: 'app-register',
@@ -21,6 +21,7 @@ export class RegisterComponent{
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
   notificationMessage: string = '';
+  
 
   // Example of a user service
   private readonly usersService: UsersService;

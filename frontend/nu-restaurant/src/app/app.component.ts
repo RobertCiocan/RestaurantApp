@@ -1,5 +1,5 @@
 import { Component, isStandalone } from '@angular/core';
-import { MeniuComponent } from './meniu/meniu.component';
+import { MeniuComponent } from './menu/meniu/meniu.component';
 
 @Component({
   selector: 'app-root',

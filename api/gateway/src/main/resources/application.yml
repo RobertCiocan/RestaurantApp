@@ -1,0 +1,87 @@
+gastrosfera:
+  api:
+    admin:
+      id: admin_routing
+      path: /admin-service/**
+      uri: ${ADMIN_SERVICE_URL:http://localhost:8085}
+    ospatar:
+      id: ospatar_routing
+      path: /ospatar-service/**
+      uri: ${OSPATAR_SERVICE_URL:http://localhost:8082}
+    client:
+      id: client_routing
+      path: /client-service/**
+      uri: ${CLIENT_SERVICE_URL:http://localhost:8084}
+    idm:
+      id: idm_routing
+      path: /idm-service/**
+      uri: ${IDM_SERVICE_URL:http://localhost:8086}
+    rezervare:
+      id: rezervare_routing
+      path: /rezervare-service/**
+      uri: ${REZERVARE_SERVICE_URL:http://localhost:8083}
+
+
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: ${gastrosfera.api.admin.id}
+          uri: ${gastrosfera.api.admin.uri}
+          predicates:
+            - Path=${gastrosfera.api.admin.path}
+        - id: ${gastrosfera.api.ospatar.id}
+          uri: ${gastrosfera.api.ospatar.uri}
+          predicates:
+            - Path=${gastrosfera.api.ospatar.path}
+        - id: ${gastrosfera.api.client.id}
+          uri: ${gastrosfera.api.client.uri}
+          predicates:
+            - Path=${gastrosfera.api.client.path}
+        - id: ${gastrosfera.api.idm.id}
+          uri: ${gastrosfera.api.idm.uri}
+          predicates:
+            - Path=${gastrosfera.api.idm.path}
+        - id: ${gastrosfera.api.rezervare.id}
+          uri: ${gastrosfera.api.rezervare.uri}
+          predicates:
+            - Path=${gastrosfera.api.rezervare.path}
+      default-filters:
+        - StripPrefix=1
+        - AddRequestHeader=proxied, true
+        - OncePerRequestFilter
+        - JwtValidationFilter
+      filter:
+        remove-hop-by-hop:
+          headers: connection, keep-alive, x-frame-options
+      httpclient:
+        connect-timeout: 30000 # 30s
+        pool:
+          max-connections: 2000
+          type: FIXED
+          metrics: true
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins: "http://localhost:4200"
+#            allowedHeaders: "*"
+#            allowedMethods:
+#              - GET
+#              - POST
+#              - PUT
+#              - DELETE
+
+
+logging:
+  level:
+    com.gastrosfera: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    reactor.netty: DEBUG
+server:
+  port: 8080
