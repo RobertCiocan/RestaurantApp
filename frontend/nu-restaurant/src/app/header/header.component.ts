@@ -16,8 +16,25 @@ export class HeaderComponent {
     return jwt !== null && jwt !== undefined;
   }
 
+  isAdmin(): boolean {
+    const jwt = sessionStorage.getItem('jwt');
+
+    if (!jwt) {
+      return false;
+    }
+
+    const tokenParts = jwt.split('.');
+
+    if (tokenParts.length !== 3) {
+      return false;
+    }
+
+    const payload = JSON.parse(atob(tokenParts[1]));
+    console.log('Payload', payload);
+    return payload && payload.role && payload.role.includes('ADMIN');
+  }
+
   logout(): void {
-    // Call the logoutUser method from the UsersService
     this.userService.logoutUser(sessionStorage.getItem('jwt')).subscribe(
       () => {
         console.log('Logout successful');

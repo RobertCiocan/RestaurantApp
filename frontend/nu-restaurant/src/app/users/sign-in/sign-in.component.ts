@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
 import { AuthenticationRequest } from '../models/Requests/authentication-request';
+import { IdmUser } from '../models/idm_user.model copy';
 
 @Component({
   selector: 'app-sing-in',
@@ -32,7 +33,18 @@ export class SignInComponent {
           const jwt = response.token;
 
           if (jwt) {
+            const tokenParts = jwt.split('.');
+
+            const payload = JSON.parse(atob(tokenParts[1]));
             sessionStorage.setItem('jwt', jwt);
+
+            const user: IdmUser = {
+              username: payload.username,
+              role: payload.role,
+              id: payload.jti
+            };
+
+            sessionStorage.setItem('user', JSON.stringify(user));
 
             console.log('User signed in:', jwt);
             this.invalidCredentials = false;
