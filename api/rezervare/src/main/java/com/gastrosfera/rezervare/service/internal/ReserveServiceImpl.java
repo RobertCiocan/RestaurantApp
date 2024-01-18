@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,22 +25,37 @@ public class ReserveServiceImpl implements ReserveService {
 
     @Override
     public ReserveDTO createReserve(ReserveDTO reserveDTO) {
-        Optional<Reserve> existingReserve = reserveRepository.findById(reserveDTO.getMasa());
-        if(existingReserve.isPresent()){
-            throw new EntityAlreadyExistsException(String.format("Masa %s este deja rezervata", reserveDTO.getMasa()));
-        }
+        Optional<Reserve> existingReserve = reserveRepository.findByUuid(reserveDTO.getUuid());
+//        if(!existingReserve.isEmpty()){
+//            throw new EntityAlreadyExistsException(String.format("Masa %s este deja rezervata", reserveDTO.getMasa()));
+//        }
         if (!isReservationTimeValid(reserveDTO, reserveDTO.getMasa())) {
             throw new IllegalArgumentException("Intervalul orar pentru rezervare este invalid.");
         }
+        Date now = new Date();
+        Date reservationDate = reserveDTO.getData(); // Obține Date din DTO
+        if (reservationDate.before(now)) {
+            throw new IllegalArgumentException("Data și timpul rezervării nu pot fi în trecut.");
+        }
+
         return reserveMapper.entityToDto(reserveRepository.save(reserveMapper.dtoToEntity(reserveDTO)));
 
     }
 
     @Override
-    public ReserveDTO getReserve(String id) {
-        Optional<Reserve> existingReserve = reserveRepository.findByMasa(id);
+    public List<ReserveDTO> getReserveByMasa(String masa) {
+        List<Reserve> existingReserve = reserveRepository.findByMasa(masa);
         if(existingReserve.isEmpty()){
-            throw new EntityDoesNotExistException(String.format("Masa %s nu este rezervata", id));
+            throw new EntityDoesNotExistException(String.format("Masa %s nu este rezervata", masa));
+        }
+        return reserveMapper.entityToDto(existingReserve);
+    }
+
+    @Override
+    public ReserveDTO getReserve(long id) {
+        Optional<Reserve> existingReserve = reserveRepository.findByUuid(id);
+        if(existingReserve.isEmpty()){
+            throw new EntityDoesNotExistException(String.format("Nu exista rezervarea %d", id));
         }
         return reserveMapper.entityToDto(existingReserve.get());
     }
@@ -51,6 +68,11 @@ public class ReserveServiceImpl implements ReserveService {
             if (!isReservationTimeValid(reserveDTO, reserve.getMasa())) {
 
                 throw new IllegalArgumentException("Intervalul orar pentru rezervare este invalid.");
+            }
+            Date now = new Date();
+            Date reservationDate = reserveDTO.getData(); // Obține Date din DTO
+            if (reservationDate.before(now)) {
+                throw new IllegalArgumentException("Data și timpul rezervării nu pot fi în trecut.");
             }
             reserve.setName(reserveDTO.getName());
             reserve.setPhone(reserveDTO.getPhone());
@@ -81,10 +103,10 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public ResponseEntity<Void> deleteReserve(String id) {
-        Optional<Reserve> existingReserve = reserveRepository.findByMasa(id);
+    public ResponseEntity<Void> deleteReserve(long id) {
+        Optional<Reserve> existingReserve = reserveRepository.findByUuid(id);
         if(existingReserve.isPresent()){
-            reserveRepository.deleteById(id);
+            reserveRepository.deleteByUuid(id);
             return ResponseEntity.noContent().build();
         }
         else{
