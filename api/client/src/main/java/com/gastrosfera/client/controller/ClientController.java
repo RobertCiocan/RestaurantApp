@@ -28,7 +28,7 @@ public class ClientController extends BaseController {
     @PostMapping("/create_client")
     public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO clientDTO) {
         System.out.println("creez client "+clientDTO);
-        return buildCreatedResponse(clientService.createClient(clientDTO));
+        return new ResponseEntity<>(clientService.createClient(clientDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/get_client/{id}")

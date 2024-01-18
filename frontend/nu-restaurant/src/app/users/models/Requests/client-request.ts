@@ -1,5 +1,5 @@
 export interface ClientRequest {
-    id:null;
+    id:string;
     nume:string;
     prenume:string;
     email:string;

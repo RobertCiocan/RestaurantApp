@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
 import { ClientRequest } from '../models/Requests/client-request';
+import { RegistrationRequest } from '../models/Requests/registration-request';
 
 @Component({
   selector: 'app-register',
@@ -34,8 +35,13 @@ export class RegisterComponent{
   register() {
     if (this.registerForm.valid) {
       console.log("e valid");
+      const registrationRequest: RegistrationRequest = {
+        username: this.registerForm.value.username,
+        password: this.registerForm.value.password,
+        role: 'ROLE_USER',
+      };
       const client_request:ClientRequest = {
-        id: null,
+        id: "",
         nume: this.registerForm.value.firstName,
         prenume: this.registerForm.value.lastName,
         email: this.registerForm.value.email,
@@ -44,7 +50,16 @@ export class RegisterComponent{
         username: this.registerForm.value.username,
         password: this.registerForm.value.password
       };
-      console.log("aici");
+      this.usersService.registerUser(registrationRequest).subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.error('Registration failed', error);
+          this.notificationMessage = 'Înregistrarea a eșuat. Vă rugăm să încercați din nou.';
+        }
+      );
+
       this.usersService.createClient(client_request).subscribe(
         (response) => {
           console.log('Client created');

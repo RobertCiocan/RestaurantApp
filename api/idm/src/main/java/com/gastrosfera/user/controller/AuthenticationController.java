@@ -1,21 +1,26 @@
 package com.gastrosfera.user.controller;
 
 import com.gastrosfera.shared.v1.base.ApiConstant;
+import com.gastrosfera.shared.v1.controller.BaseController;
 import com.gastrosfera.shared.v1.exception._4xx.EntityAlreadyExistsException;
 import com.gastrosfera.shared.v1.user.dto.AuthenticationRequest;
 import com.gastrosfera.shared.v1.user.dto.AuthenticationResponse;
 import com.gastrosfera.shared.v1.user.dto.RegistrationRequest;
-import com.gastrosfera.user.utils.JwtUtil;
-import com.gastrosfera.shared.v1.controller.BaseController;
 import com.gastrosfera.shared.v1.user.dto.UserDTO;
 import com.gastrosfera.user.service.UserService;
+import com.gastrosfera.user.utils.JwtUtil;
 import com.gastrosfera.user.utils.RedisUtil;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SignatureException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -30,16 +35,17 @@ public class AuthenticationController extends BaseController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<Map<String, Object>> authenticate(@RequestBody AuthenticationRequest request) {
+        System.out.println("Received login request");
         try {
             if (request.getUsername().isEmpty() || request.getPassword().isEmpty()) {
-                return ResponseEntity.badRequest().body("Username and password must not be empty");
+                return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Username and password must not be empty"));
             }
 
             UserDTO userDTO = userService.getUserByUsernameAndPassword(request.getUsername(), request.getPassword());
 
             if (userDTO == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "Invalid credentials"));
             }
 
             String jwt = JwtUtil.generateJwt(
@@ -49,18 +55,21 @@ public class AuthenticationController extends BaseController {
                     JwtUtil.TOKEN_EXPIRATION_TIME
             );
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", "Bearer " + jwt);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "User authenticated successfully");
+            response.put("token", jwt);
 
-            return new ResponseEntity<>("User authenticated successfully", headers, HttpStatus.OK);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", "Internal Server Error"));
         }
     }
 
+
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegistrationRequest request) {
+        System.out.println( "Received register request");
         try {
             if (request.getUsername().isEmpty() || request.getPassword().isEmpty() || request.getRole().isEmpty()) {
                 return ResponseEntity.badRequest().body(new AuthenticationResponse("Username, password, and role must not be empty"));
@@ -83,44 +92,114 @@ public class AuthenticationController extends BaseController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+    public ResponseEntity<Map<String, String>> logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        System.out.println("Received logout request");
         try {
             if (Objects.requireNonNull(authorizationHeader).isEmpty() || !authorizationHeader.startsWith("Bearer ")) {
-                return ResponseEntity.badRequest().body("Invalid Authorization header");
+                Map<String, String> response = new HashMap<>();
+                response.put("status", "error");
+                response.put("message", "Invalid Authorization header");
+
+                return ResponseEntity.badRequest().body(response);
             }
 
             String token = authorizationHeader.substring(7);
 
             RedisUtil.blacklistToken(token);
 
-            return ResponseEntity.ok("Logout successful");
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("message", "Logout successful");
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "Internal Server Error");
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
-    @PostMapping("/validate")
-    public ResponseEntity<String> validateToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+    @GetMapping("/validate")
+    public ResponseEntity<Map<String, String>> validateToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        System.out.println("Received validate request");
         try {
             if (Objects.requireNonNull(authorizationHeader).isEmpty() || !authorizationHeader.startsWith("Bearer ")) {
-                return ResponseEntity.badRequest().body("Invalid Authorization header");
-            }
+                Map<String, String> response = new HashMap<>();
+                response.put("status", "error");
+                response.put("message", "Invalid Authorization header");
 
+                return ResponseEntity.badRequest().body(response);
+            }
+            System.out.println(1);
             String token = authorizationHeader.substring(7); // after "Bearer "
 
             if (!JwtUtil.validateJwt(token)) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-            }
+                Map<String, String> response = new HashMap<>();
+                response.put("status", "error");
+                response.put("message", "Invalid JWT");
 
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+            System.out.println(2);
             if (RedisUtil.isBlacklisted(token)) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is blacklisted");
-            }
+                Map<String, String> response = new HashMap<>();
+                response.put("status", "error");
+                response.put("message", "JWT is blacklisted");
 
-            return ResponseEntity.ok("Token is valid");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+            System.out.println(3);
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("message", "Token is valid");
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "Internal Server Error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/claims")
+    public ResponseEntity<Map<String, String>> getUserClaims(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        System.out.println("Received claims request");
+        try {
+            if (Objects.requireNonNull(authorizationHeader).isEmpty() || !authorizationHeader.startsWith("Bearer ")) {
+                Map<String, String> response = new HashMap<>();
+                response.put("status", "error");
+                response.put("message", "Invalid Authorization header");
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            String token = authorizationHeader.substring(7);
+            try{
+                Claims claims = JwtUtil.getUserClaims(token);
+
+                Map<String, String> response = new HashMap<>();
+                response.put("status", "success");
+                response.put("role", claims.get("role", String.class));
+                response.put("id", claims.getId());
+
+                return ResponseEntity.ok(response);
+            }catch (Exception e){
+                Map<String, String> response = new HashMap<>();
+                response.put("status", "error");
+                response.put("message", "Invalid JWT");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "Internal Server Error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 

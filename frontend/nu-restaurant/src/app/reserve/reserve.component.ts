@@ -3,7 +3,6 @@ import { ReserveService } from './rezervare/reserve.service';
 import { Reserve } from './models/reserve.model';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reserve',
