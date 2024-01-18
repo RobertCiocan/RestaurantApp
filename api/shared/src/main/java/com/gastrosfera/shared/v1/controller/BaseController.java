@@ -12,7 +12,7 @@ public abstract class BaseController {
 
     private final HttpServletRequest request;
 
-    protected <T extends Identifiable<String>> ResponseEntity<T> buildCreatedResponse(T entity) {
+    protected <T extends Identifiable<Long>> ResponseEntity<T> buildCreatedResponse(T entity) {
         String location = UriComponentsBuilder.fromUriString(request.getRequestURL().toString()).path("/{id}").buildAndExpand(entity.getIdentifier()).toString();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
