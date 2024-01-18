@@ -20,7 +20,12 @@ mvn clean install -s ../settings.xml [-DskipTests]
 ## To create DB
 ### Run mysql in docker
 ```sh
+<<<<<<< HEAD
+docker run --name mysql -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root --restart=unless-stopped mysql:latest
+```
+
 docker run --name mysql -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mysql:latest
+
 ```
 
 ### Create database

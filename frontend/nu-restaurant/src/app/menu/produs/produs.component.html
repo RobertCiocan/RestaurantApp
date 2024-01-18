@@ -2,9 +2,9 @@
   <h1 class="food">OUR SELECTION</h1>
   <div class="listing-container">
     <div *ngIf="(prodList | async) as menuItems">
-      <section *ngFor="let prod of menuItems" class="listing" [routerLink]="['/menu/item', prod.id]">
+      <section *ngFor="let prod of menuItems" class="listing" [routerLink]="['/menu/item', prod.name]">
         <img class="listing-photo"
-          src="assets/{{ prod.name }}" 
+          src="assets/{{ prod.image }}" 
           alt="Photo of {{ prod.name }}" >
         <div class="listing-details">
           <h2 class="listing-heading">{{prod.name}}</h2>

@@ -39,7 +39,15 @@ div.container{
           margin: 0;
       }
   }
-  
+
+  .notification {
+    background-color: #252925; 
+    color: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+
   div.content{
       background: rgba(92, 92, 92, 0.5);
       -webkit-backdrop-filter: blur(10px);

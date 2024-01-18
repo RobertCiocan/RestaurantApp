@@ -1,6 +1,5 @@
 package com.gastrosfera.user.model;
 
-import com.gastrosfera.shared.v1.base.RoleEnum;
 import com.gastrosfera.shared.v1.model.BaseModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

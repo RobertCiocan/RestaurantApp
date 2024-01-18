@@ -8,18 +8,20 @@ import { MenuItem } from './models/menu-item.model';
   providedIn: 'root',
 })
 export class MenuService{
-  private apiUrl = 'http://localhost:8086/api/v1';
+  private apiUrl = 'http://localhost:8085/api/v1';
 
   constructor(private http: HttpClient) {}
 
   menuItems: MenuItem[] = [];
 
   getMenuItemById(id: string): Observable<MenuItem> {
-    return this.http.get<MenuItem>(`${this.apiUrl}/menu/${id}`);
+    const finalEndpoint = `${this.apiUrl}/produs/${id}`;
+    return this.http.get<MenuItem>(finalEndpoint);
   }
 
   getMenuItemsByCategory(category: string | null): Observable<MenuItem[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/menu/${category}`);
+    const finalEndpoint = `${this.apiUrl}/produs?category=${category}`;
+    return this.http.get<MenuItem[]>(finalEndpoint);
   }
   
 }

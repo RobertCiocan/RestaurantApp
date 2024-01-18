@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
-import { RegistrationRequest } from '../models/Requests/registration-request';
+import { ClientRequest } from '../models/Requests/client-request';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +20,8 @@ export class RegisterComponent{
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
+  notificationMessage: string = '';
+  
 
   // Example of a user service
   private readonly usersService: UsersService;
@@ -31,21 +33,28 @@ export class RegisterComponent{
 
   register() {
     if (this.registerForm.valid) {
-      const registrationRequest: RegistrationRequest = {
+      console.log("e valid");
+      const client_request:ClientRequest = {
+        id: null,
+        nume: this.registerForm.value.firstName,
+        prenume: this.registerForm.value.lastName,
+        email: this.registerForm.value.email,
+        phone_number: this.registerForm.value.phoneNumber,
+        address: this.registerForm.value.address,
         username: this.registerForm.value.username,
-        password: this.registerForm.value.password,
-        role: "ROLE_USER"
+        password: this.registerForm.value.password
       };
-
-      this.usersService.registerUser(registrationRequest).subscribe(
+      console.log("aici");
+      this.usersService.createClient(client_request).subscribe(
         (response) => {
-          console.log('User registered:', response);
+          console.log('Client created');
+          this.notificationMessage = 'Utilizator creat cu succes!';
         },
         (error) => {
           console.error('Registration failed', error);
+          this.notificationMessage = 'Înregistrarea a eșuat. Vă rugăm să încercați din nou.';
         }
       );
-      this.router.navigate(['/register']);
     }
   }
 }

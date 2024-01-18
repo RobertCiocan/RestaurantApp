@@ -75,6 +75,7 @@ spring:
 #              - DELETE
 
 
+
 logging:
   level:
     com.gastrosfera: INFO
@@ -82,4 +83,7 @@ logging:
     org.springframework.http.server.reactive: DEBUG
     org.springframework.web.reactive: DEBUG
     reactor.ipc.netty: DEBUG
+    reactor.netty: DEBUG
+server:
+  port: 8080
     reactor.netty: DEBUG

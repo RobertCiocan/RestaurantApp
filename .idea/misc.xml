@@ -8,8 +8,11 @@
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
+<<<<<<< HEAD:.idea/misc.xml
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="temurin-21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
+=======
+>>>>>>> feature/idm:api/.idea/misc.xml
   </component>
 </project>
